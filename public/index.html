@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>ดาวน์โหลดโปรแกรม</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1b2333;
+      --muted: #5f6b80;
+      --border: #e3e8f0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-soft: #e8efff;
+      --ok: #15803d;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Sans Thai", system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      line-height: 1.6;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .head {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .icon {
+      flex: none;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+    }
+    h1 { margin: 0; font-size: 1.4rem; font-weight: 700; }
+    .desc { margin: 2px 0 0; color: var(--muted); font-size: 0.95rem; }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 0 0 24px;
+      padding: 0;
+    }
+    .meta div {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      min-width: 0;
+    }
+    .meta dt { font-size: 0.75rem; color: var(--muted); }
+    .meta dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+
+    .filename {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin: 8px 0 0;
+      overflow-wrap: anywhere;
+    }
+
+    .steps {
+      margin: 24px 0 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .steps h2 { font-size: 1rem; margin: 0 0 8px; }
+    .steps ol { margin: 0; padding-left: 1.3em; color: var(--muted); font-size: 0.92rem; }
+
+    .note {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    footer {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 420px) {
+      .card { padding: 24px 20px; }
+      .meta { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="head">
+      <div class="icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 6.5h.01M10 6.5h.01"/>
+        </svg>
+      </div>
+      <div>
+        <h1 id="app-name"></h1>
+        <p class="desc" id="app-desc"></p>
+      </div>
+    </div>
+
+    <dl class="meta">
+      <div><dt>เวอร์ชัน</dt><dd id="app-version"></dd></div>
+      <div><dt>ขนาดไฟล์</dt><dd id="app-size"></dd></div>
+      <div><dt>อัปเดตล่าสุด</dt><dd id="app-date"></dd></div>
+    </dl>
+
+    <a class="btn" id="download-btn" href="#" download>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>
+      </svg>
+      ดาวน์โหลดสำหรับ Windows
+    </a>
+    <p class="filename" id="file-name"></p>
+
+    <section class="steps">
+      <h2>วิธีติดตั้ง</h2>
+      <ol>
+        <li>กดปุ่มดาวน์โหลดด้านบน</li>
+        <li>เปิดไฟล์ <strong id="step-file"></strong> ที่ดาวน์โหลดมา</li>
+        <li>หาก Windows แสดงหน้าจอ SmartScreen ให้กด "ข้อมูลเพิ่มเติม" แล้วกด "เรียกใช้ต่อไป"</li>
+        <li>ทำตามขั้นตอนบนหน้าจอจนติดตั้งเสร็จ</li>
+      </ol>
+      <p class="note">รองรับ Windows 10 / 11 (64-bit)</p>
+    </section>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script>
+    // ===== แก้ไขข้อมูลโปรแกรมตรงนี้ =====
+    const APP = {
+      name: "IC Inspection App",
+      description: "โปรแกรมตรวจสอบ IC",
+      version: "1.0.0",
+      size: "9 KB",
+      date: "11 ต.ค. 2026",
+      file: "files/IC-Inspection-app.exe", // วางไฟล์ .exe ไว้ในโฟลเดอร์ files/ แล้วแก้ชื่อตรงนี้
+      footer: "© 2026"
+    };
+    // ===================================
+
+    const $ = (id) => document.getElementById(id);
+    const fileName = APP.file.split("/").pop();
+
+    document.title = "ดาวน์โหลด " + APP.name;
+    $("app-name").textContent = APP.name;
+    $("app-desc").textContent = APP.description;
+    $("app-version").textContent = APP.version;
+    $("app-size").textContent = APP.size;
+    $("app-date").textContent = APP.date;
+    $("download-btn").href = APP.file;
+    $("download-btn").setAttribute("download", fileName);
+    $("file-name").textContent = fileName;
+    $("step-file").textContent = fileName;
+    $("footer").textContent = APP.footer;
+  </script>
+</body>
+</html>
