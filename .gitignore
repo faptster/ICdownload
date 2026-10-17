@@ -1,2 +1,4 @@
 node_modules/
 .wrangler/
+.exe
+public/files/IC-Inspection-Setup.exe
