@@ -100,6 +100,13 @@
     }
     .btn:hover { background: var(--accent-hover); }
     .btn:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+    .btn-secondary {
+      margin-top: 16px;
+      background: var(--card);
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+    }
+    .btn-secondary:hover { background: var(--accent-soft); }
 
     .filename {
       text-align: center;
@@ -168,6 +175,14 @@
     </a>
     <p class="filename" id="file-name"></p>
 
+    <a class="btn btn-secondary" id="dataset-btn" href="#" download>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>
+      </svg>
+      <span id="dataset-label"></span>
+    </a>
+    <p class="filename" id="dataset-name"></p>
+
     <section class="steps">
       <h2>วิธีติดตั้ง</h2>
       <ol>
@@ -193,6 +208,12 @@
       file: "https://github.com/faptster/ICdownload/releases/latest/download/IC-Inspection-Setup.exe", // วางไฟล์ .exe ไว้ในโฟลเดอร์ files/ แล้วแก้ชื่อตรงนี้
       footer: "Tidthian Group"
     };
+
+    const DATASET = {
+      label: "ดาวน์โหลดชุดข้อมูลทดสอบ",
+      size: "19 MB",
+      file: "https://github.com/faptster/ICdownload/releases/latest/download/datasettest.zip"
+    };
     // ===================================
 
     const $ = (id) => document.getElementById(id);
@@ -209,6 +230,12 @@
     $("file-name").textContent = fileName;
     $("step-file").textContent = fileName;
     $("footer").textContent = APP.footer;
+
+    const datasetFile = DATASET.file.split("/").pop();
+    $("dataset-label").textContent = DATASET.label;
+    $("dataset-btn").href = DATASET.file;
+    $("dataset-btn").setAttribute("download", datasetFile);
+    $("dataset-name").textContent = datasetFile + " · " + DATASET.size;
   </script>
 </body>
 </html>
